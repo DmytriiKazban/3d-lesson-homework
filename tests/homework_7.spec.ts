@@ -1,7 +1,7 @@
 import {test, expect} from "@playwright/test";
 import { mainPage } from "../page-object/mainPage";
 import { wishList } from "../page-object/wishList";
-import { productGramicci } from "../page-object/product-page";
+import { product_page } from "../page-object/product-page";
 
 test.describe('buy product', () => {
 
@@ -18,7 +18,7 @@ test.describe('buy product', () => {
     
     
     test("is the product found", async ({page}) => {
-        const grammicciProduct = new productGramicci(page);
+        const product = new product_page(page);
         const mainpage = new mainPage(page);
         const wishlist = new wishList(page);
     
@@ -27,9 +27,23 @@ test.describe('buy product', () => {
         await mainpage.searchFieldonMain.click();
         await mainpage.searchFieldonModal.fill("gramicci cordura");
         await mainpage.searchFieldonModal.press("Enter");
-        
-        await expect(grammicciProduct.gramicciCorduraBag).toBeTruthy()
+
+        expect(product.gramicciCorduraBag).toBeTruthy()
     })
-})
 
-
+    test("No My size in US", async({page})=>{
+        const product = new product_page(page);
+        const mainpage = new mainPage(page);
+        const wishlist = new wishList(page);
+        await mainpage.goto();
+        await mainpage.cookiesModalBtnAccept.click();
+        await mainpage.searchFieldonMain.click();
+        await mainpage.searchFieldonModal.fill("Nike ACG Torre Mid Waterproof");
+        await mainpage.searchFieldonModal.press("Enter");
+        await product.nikeACGWaterProof.click();
+        await product.sizeUS.click();
+        await product.exceededSize.click();
+        
+        expect(product.sizeAvailability).toBeTruthy;
+    })
+});
