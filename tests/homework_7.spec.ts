@@ -34,7 +34,6 @@ test.describe('buy product', () => {
     test("No My size in US", async({page})=>{
         const product = new product_page(page);
         const mainpage = new mainPage(page);
-        const wishlist = new wishList(page);
         await mainpage.goto();
         await mainpage.cookiesModalBtnAccept.click();
         await mainpage.searchFieldonMain.click();
